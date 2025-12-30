@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SunnyTeleCom — Your Local Telecom Shop</title>
+  <meta name="description" content="SIM cards, prepaid & postpaid plans, phone accessories, bill payment, number portability, device repairs.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f172a;           /* slate-900 */
+      --panel:#0b1227;        /* dark panel */
+      --muted:#94a3b8;        /* slate-400 */
+      --text:#e2e8f0;         /* slate-200 */
+      --brand:#22c55e;        /* green-500 */
+      --brand-2:#38bdf8;      /* sky-400 */
+      --ring: rgba(56,189,248,.45);
+      --card:#111827ee;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 16px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;background:linear-gradient(180deg,var(--bg),#030712);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{width:min(1200px,92%);margin-inline:auto}
+
+    /* Header */
+    header{position:sticky;top:0;z-index:50;background:rgba(2,6,23,.7);backdrop-filter:blur(10px);border-bottom:1px solid rgba(148,163,184,.15)}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .logo{display:flex;align-items:center;gap:10px;font-weight:700}
+    .logo-badge{width:36px;height:36px;border-radius:12px;background:radial-gradient(circle at 30% 30%,var(--brand),var(--brand-2));display:grid;place-items:center;box-shadow:var(--shadow)}
+    .logo-badge svg{filter:drop-shadow(0 2px 6px rgba(56,189,248,.45))}
+    nav ul{display:flex;gap:20px;list-style:none;padding:0;margin:0}
+    nav a{padding:8px 12px;border-radius:999px;color:var(--muted)}
+    nav a:hover{background:rgba(56,189,248,.12);color:#fff}
+    .cta{display:flex;gap:10px}
+    .btn{padding:10px 14px;border:1px solid rgba(148,163,184,.25);border-radius:12px;background:#0b1227;color:#fff;cursor:pointer;transition:.2s;box-shadow:0 2px 0 rgba(255,255,255,.02) inset}
+    .btn:hover{transform:translateY(-1px);border-color:rgba(148,163,184,.45)}
+    .btn.primary{background:linear-gradient(135deg,var(--brand),#16a34a);border:none}
+    .mobile-toggle{display:none}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:center;padding:48px 0}
+    .hero h1{font-size:clamp(28px,5vw,48px);line-height:1.1;margin:0 0 14px}
+    .hero p{color:var(--muted);margin:0 0 20px}
+    .hero-card{background:linear-gradient(180deg,rgba(59,130,246,.12),rgba(2,6,23,.6));border:1px solid rgba(148,163,184,.18);padding:22px;border-radius:var(--radius);box-shadow:var(--shadow)}
+    .badges{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 18px}
+    .badge{font-size:12px;padding:6px 10px;background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.35);color:#d1fae5;border-radius:999px}
+
+    /* Sections */
+    section{padding:30px 0}
+    .section-title{font-size:24px;margin:0 0 16px}
+    .subtle{color:var(--muted)}
+
+    /* Cards grid */
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(2,6,23,.5));border:1px solid rgba(148,163,184,.15);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+    .card h3{margin:0 0 8px}
+    .pill{font-size:12px;color:#a5b4fc;background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.35);padding:4px 8px;border-radius:999px}
+
+    /* Plans */
+    .filters{display:flex;gap:8px;margin-bottom:14px}
+    .filter-btn{padding:8px 12px;border:1px solid rgba(148,163,184,.25);background:#0b1227;border-radius:999px;color:#cbd5e1;cursor:pointer}
+    .filter-btn.active{background:linear-gradient(135deg,var(--brand-2),#2563eb);border-color:transparent;color:#fff}
+    .price{font-size:28px;font-weight:800}
+    .price small{font-size:12px;color:var(--muted);font-weight:500}
+    .features{margin:10px 0 0;padding-left:18px;color:var(--muted)}
+
+    /* Devices */
+    .device{display:flex;gap:14px;align-items:flex-start}
+    .device img{width:84px;height:84px;border-radius:12px;object-fit:cover;border:1px solid rgba(148,163,184,.2)}
+
+    /* Services */
+    .list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .list .item{display:flex;gap:12px;padding:12px;border:1px dashed rgba(148,163,184,.25);border-radius:12px;background:rgba(2,6,23,.4)}
+
+    /* Contact */
+    form{display:grid;gap:10px}
+    input, textarea, select{width:100%;padding:12px 14px;border-radius:12px;border:1px solid rgba(148,163,184,.25);background:#0b1227;color:#fff;outline:none}
+    input:focus, textarea:focus, select:focus{box-shadow:0 0 0 4px var(--ring);border-color:transparent}
+    textarea{min-height:110px;resize:vertical}
+    .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+    /* Footer */
+    footer{margin-top:24px;border-top:1px solid rgba(148,163,184,.15);padding:18px 0;color:var(--muted);font-size:14px}
+
+    /* Responsive */
+    @media (max-width: 900px){
+      .hero{grid-template-columns:1fr}
+      .grid{grid-template-columns:1fr 1fr}
+      .list{grid-template-columns:1fr}
+      nav ul{display:none;position:absolute;left:0;right:0;top:64px;background:#0b1227;border-bottom:1px solid rgba(148,163,184,.15);padding:12px}
+      nav ul.open{display:grid}
+      .mobile-toggle{display:inline-flex}
+    }
+    @media (max-width: 640px){
+      .grid{grid-template-columns:1fr}
+      .two{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container nav">
+      <div class="logo">
+        <div class="logo-badge" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 12C2 6.477 6.477 2 12 2c1.9 0 3.68.53 5.2 1.45l-2.4 4.15A6 6 0 0 0 6 12h-.01L2 12Z" fill="white"/>
+            <path d="M22 12a9.99 9.99 0 0 1-5.2 8.55l-2.4-4.15A6 6 0 0 0 18 12h4Z" fill="white" opacity=".85"/>
+          </svg>
+        </div>
+        <span>SunnyTelecom</span>
+      </div>
+      <nav>
+        <button class="btn mobile-toggle" aria-label="Toggle Menu">☰</button>
+        <ul id="menu">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#plans">Plans</a></li>
+          <li><a href="#devices">Devices</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="cta">
+        <a class="btn" href="tel:+917320856767">Call: +91 7320856767</a>
+        <a class="btn primary" href="https://wa.me/917320856767" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="home" class="container">
+    <!-- Hero -->
+    <section class="hero">
+      <div>
+        <h1>All Your Mobile Needs — Under One Roof</h1>
+        <p>Get SIM activation, prepaid & postpaid plans, number portability (MNP), bill payments, mobile accessories, and device repairs. Fast service. Genuine products. Friendly support.</p>
+        <div class="badges">
+          <span class="badge">Prepaid • Postpaid</span>
+          <span class="badge">eSIM Support</span>
+          <span class="badge">MNP in 15 mins*</span>
+        </div>
+        <div class="cta">
+          <a class="btn primary" href="#plans">Browse Plans</a>
+          <a class="btn" href="#contact">Get a Quote</a>
+        </div>
+        <p class="subtle" style="margin-top:8px;font-size:12px">*T&amp;C apply. Actual activation time may vary by carrier.</p>
+      </div>
+      <div class="hero-card">
+        <h3 style="margin:0 0 8px">Store Hours</h3>
+        <p class="subtle" style="margin:0 0 8px">Mon–Sun: 9:00 AM – 9:00 PM</p>
+        <div style="display:grid;gap:8px">
+          <div style="display:flex;gap:8px;align-items:center">
+            <span class="pill">Bill Pay</span>
+            <span class="pill">Recharge</span>
+            <span class="pill">Repairs</span>
+          </div>
+          <p class="subtle" style="margin:0">Visit us: paschim bazar kutumba Aurangabad bihar pincode-824123</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Plans -->
+    <section id="plans">
+      <h2 class="section-title">Popular Plans</h2>
+      <p class="subtle">Choose from prepaid and postpaid plans. Filter to see what fits you.</p>
+      <div class="filters" role="tablist" aria-label="Plan type filters">
+        <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">All</button>
+        <button class="filter-btn" data-filter="prepaid" role="tab">Prepaid</button>
+        <button class="filter-btn" data-filter="postpaid" role="tab">Postpaid</button>
+      </div>
+      <div class="grid" id="planGrid">
+        <article class="card" data-type="prepaid">
+          <div class="pill">Prepaid</div>
+          <h3>Daily 1.5GB • 84 Days</h3>
+          <div class="price">₹799 <small>/ pack</small></div>
+          <ul class="features">
+            <li>Voice unlimited • 100 SMS/day</li>
+            <li>Free caller tunes</li>
+            <li>Hotspot supported</li>
+          </ul>
+          <div class="cta" style="margin-top:12px">
+            <a class="btn primary" href="#contact" data-plan="Prepaid 1.5GB/Day 84 Days">Enquire</a>
+            <a class="btn" href="#contact" data-plan="Port to Prepaid (MNP)">Port (MNP)</a>
+          </div>
+        </article>
+        <article class="card" data-type="prepaid">
+          <div class="pill">Prepaid</div>
+          <h3>2GB/Day • 28 Days</h3>
+          <div class="price">₹398 <small>/ pack</small></div>
+          <ul class="features">
+            <li>Unlimited calls • 100 SMS/day</li>
+            <li>App benefits included</li>
+          </ul>
+          <div class="cta" style="margin-top:12px">
+            <a class="btn primary" href="#contact" data-plan="Prepaid 2GB/Day 28 Days">Enquire</a>
+            <a class="btn" href="#contact" data-plan="Prepaid Add‑ons">Add‑ons</a>
+          </div>
+        </article>
+        <article class="card" data-type="postpaid">
+          <div class="pill">Postpaid</div>
+          <h3>Family 609 •  Connections</h3>
+          <div class="price">₹609 <small>/ month</small></div>
+          <ul class="features">
+            <li>60GB shared data • Data rollover</li>
+            <li>Unlimited calls • OTT trials</li>
+          </ul>
+          <div class="cta" style="margin-top:12px">
+            <a class="btn primary" href="#contact" data-plan="Postpaid 609 Family">Enquire</a>
+            <a class="btn" href="#contact" data-plan="Switch to Postpaid">Switch</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Devices -->
+    <section id="devices">
+      <h2 class="section-title">Featured Devices & Accessories</h2>
+      <p class="subtle">Ask us for today’s price and availability.</p>
+      <div class="grid">
+        <article class="card device">
+          <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=800&auto=format&fit=crop" alt="Smartphone on table">
+          <div>
+            <h3>Smartphone A14 5G</h3>
+            <p class="subtle">6.6" FHD+, 50MP • 5000mAh</p>
+            <div class="cta" style="margin-top:10px"><a class="btn" href="#contact" data-device="Smartphone A14 5G">Enquire</a></div>
+          </div>
+        </article>
+        <article class="card device">
+          <img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?q=80&w=800&auto=format&fit=crop" alt="Wireless earbuds">
+          <div>
+            <h3>Wireless Buds Pro</h3>
+            <p class="subtle">ANC • 28h playtime • Type‑C</p>
+            <div class="cta" style="margin-top:10px"><a class="btn" href="#contact" data-device="Wireless Buds Pro">Enquire</a></div>
+          </div>
+        </article>
+        <article class="card device">
+          <img src="https://images.unsplash.com/photo-1517817757569-dcfi8tce6_w?q=80&w=800&auto=format&fit=crop" alt="Phone cases and accessories">
+          <div>
+            <h3>Cases, Cables & Chargers</h3>
+            <p class="subtle">Fast chargers • Type‑C • PD</p>
+            <div class="cta" style="margin-top:10px"><a class="btn" href="#contact" data-device="Accessories">Enquire</a></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services">
+      <h2 class="section-title">In‑Store Services</h2>
+      <div class="list">
+        <div class="item">
+          <div class="pill">SIM & eSIM</div>
+          <div>
+            <h3 style="margin:0 0 4px">New Connection & KYC</h3>
+            <p class="subtle" style="margin:0">Quick activation with paperless e‑KYC.</p>
+          </div>
+        </div>
+        <div class="item">
+          <div class="pill">MNP</div>
+          <div>
+            <h3 style="margin:0 0 4px">Port Your Number</h3>
+            <p class="subtle" style="margin:0">Keep your number • Switch carriers easily.</p>
+          </div>
+        </div>
+        <div class="item">
+          <div class="pill">Recharge</div>
+          <div>
+            <h3 style="margin:0 0 4px">Prepaid/Postpaid Bill Pay</h3>
+            <p class="subtle" style="margin:0">Instant bill payment & top‑ups.</p>
+          </div>
+        </div>
+        <div class="item">
+          <div class="pill">Repairs</div>
+          <div>
+            <h3 style="margin:0 0 4px">Phone Repair</h3>
+            <p class="subtle" style="margin:0">Screens, batteries, ports & more.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about">
+      <h2 class="section-title">About TeleConnect</h2>
+      <p class="subtle">We are your neighborhood telecom experts with 10+ years of trusted service. We partner with leading carriers to offer genuine SIMs, easy upgrades, and reliable after‑sales support. Customer happiness is our priority.
+      </p>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+      <h2 class="section-title">Get in Touch</h2>
+      <div class="grid" style="grid-template-columns:1.1fr .9fr;gap:18px">
+        <div class="card">
+          <form id="contactForm">
+            <div class="two">
+              <div>
+                <label for="name" class="subtle">Full Name</label>
+                <input id="name" name="name" placeholder="Your name" required />
+              </div>
+              <div>
+                <label for="phone" class="subtle">Phone</label>
+                <input id="phone" name="phone" placeholder="+91 …" required pattern="^[+0-9 ]{8,}$" />
+              </div>
+            </div>
+            <div class="two">
+              <div>
+                <label for="service" class="subtle">Service</label>
+                <select id="service" name="service">
+                  <option>General Enquiry</option>
+                  <option>New SIM / eSIM</option>
+                  <option>Port Number (MNP)</option>
+                  <option>Recharge / Bill Payment</option>
+                  <option>Device Purchase</option>
+                  <option>wiring Service</option>
+                </select>
+              </div>
+              <div>
+                <label for="ref" class="subtle">Plan/Device (auto‑filled)</label>
+                <input id="ref" name="ref" placeholder="e.g., Postpaid 399" />
+              </div>
+            </div>
+            <div>
+              <label for="msg" class="subtle">Message</label>
+              <textarea id="msg" name="msg" placeholder="Tell us how we can help"></textarea>
+            </div>
+            <div class="two">
+              <button type="submit" class="btn primary">Send Enquiry</button>
+              <a class="btn" href="mailto:hello@teleconnect.shop?subject=Enquiry" target="_blank" rel="noopener">Email Us</a>
+            </div>
+            <p id="formStatus" class="subtle" style="margin:6px 0 0"></p>
+          </form>
+        </div>
+        <div class="card">
+  <h3 style="margin-top:0">Visit the Store</h3>
+  <p class="subtle" style="margin:0 0 10px"> paschim bazar kutumba Aurangabad bihar</p>
+  <iframe
+    title="Store location"
+    width="100%"
+    height="220"
+    style="border:0;border-radius:12px"
+    loading="lazy"
+    allowfullscreen
+    referrerpolicy="no-referrer-when-downgrade"
+    src="https://www.google.com/maps?q=paschim+bazar+kutumba+Aurangabad+Bihar&output=embed"></iframe>
+  <div style="display:flex;gap:10px;margin-top:12px">
+    <a class="btn" href="tel:+911234567890">Call Now</a>
+    <a class="btn" target="_blank" rel="noopener" href="https://wa.me/917320856767">Chat on WhatsApp</a>
+</div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <span>© <span id="year"></span> TeleConnect. All rights reserved.</span>
+      <span> • Support: hello@teleconnect.shop</span>
+    </div>
+  </footer>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile menu toggle
+    const toggle = document.querySelector('.mobile-toggle');
+    const menu = document.getElementById('menu');
+    toggle?.addEventListener('click',() => menu.classList.toggle('open'));
+
+    // Plan filters
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const planGrid = document.getElementById('planGrid');
+    filterBtns.forEach(btn=>btn.addEventListener('click',()=>{
+      filterBtns.forEach(b=>b.classList.remove('active')); btn.classList.add('active');
+      const type = btn.dataset.filter;
+      planGrid.querySelectorAll('.card').forEach(card=>{
+        const visible = type==='all' || card.dataset.type===type;
+        card.style.display = visible ? 'block' : 'none';
+      })
+    }));
+
+    // Autofill contact form from buttons
+    const refInput = document.getElementById('ref');
+    document.querySelectorAll('[data-plan], [data-device]').forEach(el=>{
+      el.addEventListener('click', (e)=>{
+        const plan = el.getAttribute('data-plan');
+        const device = el.getAttribute('data-device');
+        const value = plan || device || '';
+        if(value){ refInput.value = value; }
+      })
+    })
+
+    // Basic form handler (demo only)
+    const form = document.getElementById('contactForm');
+    const status = document.getElementById('formStatus');
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+      // Simulate success
+      status.textContent = 'Thanks ' + (data.name||'') + '! We\'ll call you at ' + (data.phone||'') + ' shortly.';
+      form.reset();
+      refInput.value = '';
+      status.style.color = '#86efac';
+    })
+  </script>
+</body>
+</html>
